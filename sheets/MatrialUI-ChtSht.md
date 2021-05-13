@@ -3,7 +3,6 @@
 To use Server-side Rendering for a page, you need to **export** an **async** function called **getServerSideProps**. This function will be called by the server on every request. The returned data from getServerSideProps is passed to the related component as props.  
 
 For a more detailed reference see: [data fetching and getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering)  
-
 See here for **TyeScript** support: [typescript use getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getserversideprops)  
 
 ```javascript
@@ -35,9 +34,7 @@ export default Page
 If you **export** an **async** function called **getStaticProps** from a page, Next.js will pre-render this page at build time using the props returned by getStaticProps.  
 
 For a more detailed reference see: [data fetching and getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation)  
-
 For Incremental Static Regeneration see: [incremental static regeneration](https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration)  
-
 See here for **TyeScript** support: [typescript use getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getstaticprops) 
 
 ```javascript
