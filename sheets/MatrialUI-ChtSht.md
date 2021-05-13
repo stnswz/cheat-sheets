@@ -18,6 +18,13 @@ After installing Material UI package, add the Font to use with (default is Robot
 
 ----
 
+## TypeScript  
+
+You can add static typing to JavaScript to improve developer productivity and code quality thanks to TypeScript.  
+[https://material-ui.com/guides/typescript/](https://material-ui.com/guides/typescript/)  
+
+----
+
 ## Typography
 [material-ui.com/components/typography/](https://material-ui.com/components/typography/)  
    
