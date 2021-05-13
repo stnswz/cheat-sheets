@@ -1,196 +1,256 @@
-## Rendering SSR & Static Generation
-### **Server-side Rendering (SSR)**
-To use Server-side Rendering for a page, you need to **export** an **async** function called **getServerSideProps**. This function will be called by the server on every request. The returned data from getServerSideProps is passed to the related component as props.  
+## Initial
+[material-ui.com/getting-started/installation/](https://material-ui.com/getting-started/installation/)  
+After installing Material UI package, add the Font to use with (default is Roboto) to the index.html in the public folder:  
 
-For a more detailed reference see: [data fetching and getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering)  
-See here for **TyeScript** support: [typescript use getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getserversideprops)  
-
-```javascript
-function Page({ data }) {
-  // Render data...
-}
-
-// This gets called on every request
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://.../data`)
-  const data = await res.json()
-
-  // Optional boolean value to allow the page to return a 404 status and page. 
-  if (!data) {
-    return {
-      notFound: true
-    }
-  }
-
-  // Pass data to the page via props
-  return { props: { data } }
-}
-
-export default Page
-```  
-
-### **Static Site Generation**  
-If you **export** an **async** function called **getStaticProps** from a page, Next.js will pre-render this page at build time using the props returned by getStaticProps.  
-
-For a more detailed reference see: [data fetching and getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation)  
-For Incremental Static Regeneration see: [incremental static regeneration](https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration)  
-See here for **TyeScript** support: [typescript use getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getstaticprops) 
-
-```javascript
-function Page({ data }) {
-  // Render data...
-}
-
-// This function gets called at build time on server-side.
-// It may be called again, on a serverless function, if
-// revalidation is enabled and a new request comes in
-export async function getStaticProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://.../data`)
-  const data = await res.json()
-
-  // Optional boolean value to allow the page to return a 404 status and page. 
-  if (!data) {
-    return {
-      notFound: true
-    }
-  }
-
-  // Pass data to the page via props (see also revalidation)
-  return { 
-    props: { data },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every second
-    revalidate: 1, // In seconds
-  }
-}
-
-export default Page
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    ...
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    ...
+  </head>
+  <body>
+    ...
+  </body>
+</html>
 ``` 
 
-### **Static Site Generation using getStaticPaths()**  
-Next.js allows you to create pages with **dynamic routes**. For example, you can create a file called pages/posts/[id].js to show a single blog post based on id. This will allow you to show a blog post with id: 1 when you access posts/1, id: 2 when you access posts/2 etc.  
-To handle this, Next.js lets you export an **async** function called **getStaticPaths** from a dynamic page (pages/posts/[id].js in this case). This function gets called at build time and lets you specify which paths you want to pre-render.  
+----
 
-See also: [page paths depend on external data](https://nextjs.org/docs/basic-features/pages#scenario-2-your-page-paths-depend-on-external-data)  
-For a more detailed reference see: [data fetching with getStaticPaths static generation](https://nextjs.org/docs/basic-features/data-fetching#getstaticpaths-static-generation)
+## Typography
+[material-ui.com/components/typography/](https://material-ui.com/components/typography/)  
+   
 ```javascript
-// This function gets called at build time
-export const getStaticPaths = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users');
-  const data = await res.json();
+import React from 'react'
+import Typography from '@material-ui/core/Typography'
 
-  // map data to an array of path objects with params (id)
-  const paths = data.map(ninja => {
-    return {
-      params: { id: ninja.id.toString() }
-    }
-  })
+export default function MyComponent() {
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return {
-    paths, 
-    fallback: false
-  }
-}
-
-// 'context' is the object returned by getStaticPaths. You also could use "async ({ params }) => {"
-export const getStaticProps = async (context) => {
-  const id = context.params.id;
-  const res = await fetch('https://jsonplaceholder.typicode.com/users/' + id);
-  const data = await res.json();
-
-  return {
-    props: { ninja: data }
-  }
-}
-
-const Details = ({ ninja }) => {
   return (
     <div>
-      <h1>{ ninja.name }</h1>
-      <p>{ ninja.email }</p>
-      <p>{ ninja.website }</p>
-      <p>{ ninja.address.city }</p>
+      // 'component': is used for the root node (HTML element or a component). Defaults to <p> Tag
+      // 'variant':   applies the theme typography styles
+      <Typography
+        component="h2" 
+        variant="h6"
+        align="center"
+        color="secondary"
+        gutterBottom
+      >
+        My Title Text
+      </Typography>
     </div>
+  )
+}
+```  
+
+----
+
+## Icons  
+[material-ui.com/components/icons/](https://material-ui.com/components/icons/)  
+
+Material Design has standardized over 1,100 official icons, each in five different "themes" (see below). For each SVG icon, we export the respective React component from the @material-ui/icons package. You can search the [full list of these icons](https://material-ui.com/components/material-icons/).  
+**Installation**  
+```bash
+// with npm
+npm install @material-ui/icons
+
+// with yarn
+yarn add @material-ui/icons
+```  
+**Using**  
+
+```javascript
+import {SendIcon, KeyboardArrowRightIcon, AcUnitOutlinedIcon} from '@material-ui/icons/'
+
+export default function Create() {
+  return (
+    <Container size="sm">
+      <Button
+        ...
+        startIcon={<SendIcon />}
+        endIcon={<KeyboardArrowRightIcon />}>
+      </Button>
+
+      <AcUnitOutlinedIcon color="secondary" fontSize="large" />
+    </Container>
+  )
+}
+```  
+
+----
+
+## Theming
+[material-ui.com/styles/advanced/](https://material-ui.com/styles/advanced/)  
+[material-ui.com/customization/default-theme/](https://material-ui.com/customization/default-theme/)  
+[material-ui.com/customization/color/](https://material-ui.com/customization/color/)  
+
+**Overwrite Default Theme**  
+For overwriting default theme, overwrite all neccessary properties of the default theme object: [material-ui.com/customization/default-theme/](https://material-ui.com/customization/default-theme/)  
+```javascript
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { purple } from '@material-ui/core/colors'
+
+// For custom Font (added in typography property), import the related Font at top of the index.css file:
+// @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#fefefe'
+    },
+    secondary: purple
+  },
+  typography: {
+    fontFamily: 'Quicksand',
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
+  }
+})
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <MyApplication />
+    </ThemeProvider>
   );
 }
 
-export default Details;
-```
-
-----  
-
-## Next CSS
-### **Normal CSS**  
-  
-```javascript
-import '../styles/globals.css'
-
-function MyApp({ Component, pageProps }) {
-  return (
-    <div className="container">
-      <Component {...pageProps} />
-    </div>
-  )
-}
-```  
-  
-### **CSS Modules**  
-With using CSS Modules the used CSS is scoped  
-  
-```scss
-/* MyComponent.module.css */
-.title {
-  ...
-}
-.text {
-  ...
-}
+export default App;
 ```  
 
+----
+
+## Styles  
+[material-ui.com/styles/basics/](https://material-ui.com/styles/basics/)  
+### **Simple makeStyles example**
 ```javascript
-import styles from '../styles/MyComponent.module.css'
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles({
+  btn: {
+    fontSize: 60,
+    backgroundColor: 'violet',
+    '&:hover': {
+      background: 'blue'
+    },
+  },
+  title: {
+    textDecoration: 'underline',
+    marginBottom: 20,
+  }
+})
 
 export default function MyComponent() {
+  const classes = useStyles()
+
+  return (
+    <Container size="sm">
+      <Typography
+        className={classes.title}
+        ...
+      >
+        My pretty styled Text
+      </Typography>
+
+      <Button>
+        className={classes.btn}
+        ...
+      </Button>
+    </Container>
+  )
+}
+``` 
+### **makeStyles example using "theme" parameter**  
+All properties offered in the theme object: [material-ui.com/customization/default-theme/](https://material-ui.com/customization/default-theme/)  
+```javascript
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles((theme) => {
+  return {
+    title: {
+      textDecoration: 'underline',
+      marginBottom: theme.spacing(3)
+    }
+  }
+})
+
+export default function MyComponent() {
+  const classes = useStyles()
+  ...
+}
+``` 
+### **makeStyles example using custom parameter** 
+```javascript
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles({
+  optionalBorder: {
+    border: (note) => {
+      if (note.category == 'work') {
+        return '1px solid red'
+      }
+    }
+  }
+})
+
+export default function MyComponent({ note }) {
+  const classes = useStyles(note)
+
   return (
     <div>
-      <h1 className={styles.title}>Homepage</h1>
-      <p className={styles.text}>Hello</p>
+      <Card className={classes.optionalBorder}>
+        ...
+      </Card>
     </div>
   )
 }
-```  
-
-----  
-
-## Next Link Component
-
-The Link component is similar to using &lt;a&gt; tags, but instead of &lt;a href="..."&gt;, you use &lt;Link href="..."&gt; and put an &lt;a&gt; tag inside.  
-Link Attributes and more: [nextjs.org/docs/api-reference/next/link](https://nextjs.org/docs/api-reference/next/link)  
-```javascript
-import Link from 'next/link'
-
-<div>
-  <Link href="/posts/first-post">
-    <a>Link to first Post</a>
-  </Link>
-</div>
-```  
-
-----  
-
-## Next Image Component
-
-```javascript
-
 ``` 
 
-----  
+----
 
-## Next Router
+## Lists  
+[material-ui.com/components/lists/](https://material-ui.com/components/lists/)  
+**Simple List example**
+```javascript
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 
+export default function Layout({ children }) {
 
+  const menuItems = [
+    { 
+      text: 'My Notes', 
+      icon: <SubjectOutlined color="secondary" />, 
+      path: '/' 
+    },
+    { 
+      text: 'Create Note', 
+      icon: <AddCircleOutlineOutlined color="secondary" />, 
+      path: '/create' 
+    },
+  ];
+
+  return (
+    <div>
+      <List>
+        {menuItems.map((item) => (
+          <ListItem 
+            button 
+            key={item.text} 
+            onClick={() => router.push(item.path)}
+            className={location.pathname == item.path ? classes.active : null}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  )
+}
+```
