@@ -191,6 +191,63 @@ import Link from 'next/link'
 
 ----  
 
-## Next Router
+## Next Routing / Router
+### **Routing**  
+File-System based routing built on the concept of pages:  
+[nextjs.org/docs/routing/introduction](https://nextjs.org/docs/routing/introduction)  
 
+```javascript
+import Link from 'next/link'
 
+function Home() {
+  return (
+    <ul>
+      <li>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/about">
+          <a>About Us</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/blog/hello-world">
+          <a>Blog Post</a>
+        </Link>
+      </li>
+    </ul>
+  )
+}
+
+export default Home
+```
+
+### **Router**  
+If you want to access the **router object** inside any function component, you can use the **useRouter** hook:  
+[nextjs.org/docs/api-reference/next/router](https://nextjs.org/docs/api-reference/next/router)  
+
+```javascript
+import { useRouter } from 'next/router'
+
+function ActiveLink({ children, href }) {
+  const router = useRouter()
+  const style = {
+    color: router.asPath === href ? 'red' : 'black',
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push(href)
+  }
+
+  return (
+    <a href={href} onClick={handleClick} style={style}>
+      {children}
+    </a>
+  )
+}
+
+export default ActiveLink
+```
