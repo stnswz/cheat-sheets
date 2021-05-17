@@ -215,6 +215,37 @@ export default function MyComponent({ note }) {
   )
 }
 ``` 
+### **Overriding styles with classes**  
+[material-ui.com/customization/components/#overriding-styles-with-classes](https://material-ui.com/customization/components/#overriding-styles-with-classes)  
+You can take advantage of the classes object property to customize (override) all the CSS classes (injected by Material-UI) for a given component.  
+The list of classes for each component is documented in the component API page. Alternatively, you can use the browser dev tools.  
+Material-UI's class names follow a simple pattern in development mode: Mui[component name]-[style rule name]-[UUID] (e.g. "MuiButton-label-tqykb1").
+```javascript
+const useStyles = makeStyles({
+  root: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    color: 'white',
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+});
+
+export default function ClassesNesting() {
+  const classes = useStyles();
+
+  return (
+    <Button
+      classes={{
+        root: classes.root, 
+        label: classes.label,
+      }}
+    >
+      Button Text
+    </Button>
+  );
+}
+``` 
 
 ----
 
