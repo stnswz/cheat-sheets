@@ -38,17 +38,17 @@ import React, { MouseEvent, KeyboardEvent, SyntheticEvent } from 'react';
 
 // Button
 const onButtonClick = (event: MouseEvent) => {
-	event.preventDefault();
-	alert(event.currentTarget.tagName); // alerts BUTTON
+  event.preventDefault();
+  alert(event.currentTarget.tagName); // alerts BUTTON
 }
 <button onClick={onButtonClick}>Click Here</button>
 
 // Text Input
 const [inputText, setInputText] = useState('')
 const onKeyPress = (ev:KeyboardEvent) => {
-    if( ev.key === "Enter") {
-        // do any action
-    }
+  if( ev.key === "Enter") {
+      // do any action
+  }
 }
 <input type="text" value={inputText} onChange={event => setInputText(event.target.value)} onKeyPress={onKeyPress} />
 
@@ -91,10 +91,10 @@ See also:
 ## Axios  
 See also: [blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/](https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/)
 ```javascript
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 await axios.get(url, {params: {query: searchText}})
-.then ((response: any) => {
+.then ((response: AxiosResponse<Record<string, unknown>>) => {
   setResponseData(response.data)
 })
 .catch((error) => {

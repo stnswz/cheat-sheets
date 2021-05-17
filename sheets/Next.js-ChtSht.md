@@ -184,11 +184,49 @@ import Link from 'next/link'
 ----  
 
 ## Next Image Component
-
+Image Optimization can be enabled via the &lt;Image /&gt; component exported by next/image.  
+[nextjs.org/docs/api-reference/next/image](https://nextjs.org/docs/api-reference/next/image)   
 ```javascript
+import Image from 'next/image'
 
+function Home() {
+  return (
+    <>
+      <h1>My Homepage</h1>
+      <Image
+        src="/me.png"
+        alt="Picture of the author"
+        width={500}
+        height={500}
+      />
+      <p>Welcome to my homepage!</p>
+    </>
+  )
+}
+
+export default Home
 ``` 
+**Example with loader**  
+[nextjs.org/docs/api-reference/next/image#loader](https://nextjs.org/docs/api-reference/next/image#loader)
+```javascript
+import Image from 'next/image'
 
+const myLoader = ({ src, width, quality }) => {
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+}
+
+const MyImage = (props) => {
+  return (
+    <Image
+      loader={myLoader}
+      src="/me.png"
+      alt="Picture of the author"
+      width={500}
+      height={500}
+    />
+  )
+}
+``` 
 ----  
 
 ## Next Routing / Router
