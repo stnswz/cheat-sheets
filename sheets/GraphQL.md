@@ -254,3 +254,122 @@ Result
   }
 }
 ```
+
+----
+
+## React Examples using GraphQL
+### **Examples using Axios**  
+```javascript
+const axiosGitHubGraphQL = axios.create({
+  baseURL: 'https://api.github.com/graphql',
+  headers: {
+    Authorization: 'bearer YOUR_GITHUB_PERSONAL_ACCESS_TOKEN',
+  },
+});
+
+const GET_ISSUES_OF_REPOSITORY = `
+  {
+    organization(login: "the-road-to-learn-react") {
+      name
+      url
+      repository(name: "the-road-to-learn-react") {
+        name
+        url
+        issues(last: 5) {
+          edges {
+            node {
+              id
+              title
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+onFetchFromGitHub = () => {
+  axiosGitHubGraphQL
+    .post('', { query: GET_ISSUES_OF_REPOSITORY })
+    .then(result =>
+        ...
+  );
+};
+```
+**Using GraphQL Variables and Arguments in React**  
+* Simply using a naive approach by performing string interpolation with JavaScript rather than using GraphQL variables.  
+```javascript
+const getIssuesOfRepositoryQuery = (organization, repository) => `
+  {
+    organization(login: "${organization}") {
+      name
+      url
+      repository(name: "${repository}") {
+        name
+        url
+        issues(last: 5) {
+          edges {
+            node {
+              id
+              title
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const organisation = 'abcd'
+const repository = 'defg'
+
+function onFetchFromGitHub() {
+  axiosGitHubGraphQL
+    .post('', {
+      query: getIssuesOfRepositoryQuery(organization, repository),
+    })
+    .then(result =>
+        ...
+  );
+};
+```
+* Using pure GraphQL variables.   
+```javascript
+const GET_ISSUES_OF_REPOSITORY = `
+  query ($organization: String!, $repository: String!) {
+    organization(login: $organization) {
+      name
+      url
+      repository(name: $repository) {
+        name
+        url
+        issues(last: 5) {
+          edges {
+            node {
+              id
+              title
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const organisation = 'abcd'
+const repository = 'defg'
+
+function onFetchFromGitHub() {
+  axiosGitHubGraphQL
+    .post('', {
+      query: GET_ISSUES_OF_REPOSITORY,
+      variables: { organization, repository }, // the separate, transport-specific variables dictionary
+    })
+    .then(result =>
+        ...
+  );
+};
+```

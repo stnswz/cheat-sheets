@@ -16,7 +16,9 @@ function TodoRow( {item, onDeleteClick}: ITodoRowProps ) {
 // Or optionaly  
 <TodoRow key={item.id} item={item} onDeleteClick={onDeleteClick} />
 ```  
-  
+
+----
+
 ## Redux Hooks
 ```javascript
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +33,9 @@ useEffect(() => {
 // eslint-disable-next-line 
 }, [inputText]);
 ```  
-  
+
+----
+
 ## Input Element & Events  
 ```javascript
 import React, { MouseEvent, KeyboardEvent, SyntheticEvent } from 'react';
@@ -69,9 +73,13 @@ const onOptionChange = (event:any) => {
 <label><input type="radio" id="2" name="filter" value="Filter" checked={selectedFilter === '2'} onChange={onOptionChange} /> Filter</label>
 ```  
 
+----
+
 ## Event Types  
 [fettblog.eu/typescript-react/events/](https://fettblog.eu/typescript-react/events/)  
-  
+
+----
+
 ## Conditional rendering
 See also: [robinwieruch.de/conditional-rendering-react](https://www.robinwieruch.de/conditional-rendering-react)
 ```javascript
@@ -82,12 +90,16 @@ return (
   </>
 );
 ```  
-  
+
+----
+
 ## Hooks  
 See also:  
 [fettblog.eu/typescript-react/hooks/](https://fettblog.eu/typescript-react/hooks/)  
 [reactjs.org/docs/hooks-reference.html](https://reactjs.org/docs/hooks-reference.html)  
-  
+
+----
+
 ## Axios  
 See also: [blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/](https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/)
 ```javascript
@@ -101,7 +113,9 @@ await axios.get(url, {params: {query: searchText}})
   setIsError(true)
 })
 ``` 
-  
+
+----
+
 ## Children
 See also:  
 [fettblog.eu/typescript-react/children/](https://fettblog.eu/typescript-react/children/)  
@@ -128,7 +142,9 @@ const MyComponent: FunctionComponent<ComponentProps> = (props) => {
   );
 }
 ```  
-  
+
+----
+
 ## Binding 
 **Bind Value to an Event**
 ```javascript
@@ -139,3 +155,21 @@ const MyComponent: FunctionComponent<ComponentProps> = (props) => {
 ```javascript
 setTimeout(setSearchTextDelayed.bind(null, anyValue), 500)
 ```  
+
+----
+
+## Using Environment variables (.env file)
+Environment variables are defined in a ".env" file. Be sure to follow the correct naming constraints. When using create-react-app, it uses REACT_APP as prefix for each key. In the .env file, paste the following key value pair. The key has to have the REACT_APP prefix, and (in the example) the value has to be an access token.
+```javascript
+REACT_APP_ACCESS_TOKEN=abcdefg12345678hijklmnop
+``` 
+Now, you can pass the personal access token as environment variable to your configuration like this (example uses an axios initial setup):
+```javascript
+const axiosGitHubGraphQL = axios.create({
+  baseURL: 'https://api.github.com/graphql',
+  headers: {
+    // will look like "Authorization: 'bearer abcdefg12345678hijklmnop'"
+    Authorization: "'bearer " + process.env.REACT_APP_ACCESS_TOKEN + "'"
+  },
+});
+``` 
