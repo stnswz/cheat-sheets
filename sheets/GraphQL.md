@@ -6,7 +6,7 @@ GitHub's GraphQL API and Tutorial:
 https://www.robinwieruch.de/graphql-tutorial/  
 ### **Fields**  
 [graphql.org/learn/queries/#fields](https://graphql.org/learn/queries/#fields)  
-The 'hero' is an object in GraphQL terms. Objects hold data about an entity. This data is accessed using a so-called field in GraphQL. In its most basic form, a query is just objects and fields, and objects can also be called fields. In the example the field is 'name'.
+The 'hero' is an object in GraphQL terms. Objects hold data about an entity. This data is accessed using a so-called field in GraphQL. In its most basic form, a query is just objects and fields, and objects can also be called fields. In the example, there are 2 fields: 'name' and 'friends', where 'friends' is also an object.
 
 ```graphql
 {
