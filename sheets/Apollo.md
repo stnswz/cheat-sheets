@@ -178,4 +178,54 @@ const { loading, error, data } = useQuery(GET_DOGS, {
 });
 ```
 List with all supported fetch policies: 
-[apollographql.com/docs/react/data/queries/#supported-fetch-policies](https://www.apollographql.com/docs/react/data/queries/#supported-fetch-policies)
+[apollographql.com/docs/react/data/queries/#supported-fetch-policies](https://www.apollographql.com/docs/react/data/queries/#supported-fetch-policies)  
+
+### **TypeScript**  
+[apollographql.com/docs/react/development-testing/static-typing/](https://www.apollographql.com/docs/react/development-testing/static-typing/)  
+Apollo Client's **useQuery**, **useMutation** and **useSubscription** React hooks are fully typed. React Hook options and result types are listed in the [Hooks API](https://www.apollographql.com/docs/react/api/react/hooks/) section of the docs.  
+
+**typed useQuery Example**  
+```javascript
+import React from 'react'
+import { useQuery, gql } from '@apollo/client'
+
+interface RocketInventory {
+  id: number,
+  model: string,
+}
+
+interface RocketInventoryData {
+  rocketInventory: RocketInventory[]
+}
+
+interface RocketInventoryVars {
+  year: number
+}
+
+const GET_ROCKET_INVENTORY = gql`
+  query GetRocketInventory($year: Int!) {
+    rocketInventory(year: $year) {
+      id
+      model
+    }
+  }
+`;
+
+export function RocketInventoryList() {
+  const { loading, data } = useQuery<RocketInventoryData, RocketInventoryVars>(
+    GET_ROCKET_INVENTORY,
+    { variables: { year: 2019 } }
+  );
+  return (
+    {loading && <p>Loading...</p>}
+    <ul>
+      {data && data.rocketInventory.map(inventory => (
+        <li>
+          Model: {inventory.model}, Id: {inventory.id} 
+        </li>
+      ))}
+      )}
+    </ul>
+  );
+}
+```

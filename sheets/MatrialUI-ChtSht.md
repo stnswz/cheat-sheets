@@ -127,6 +127,16 @@ function App() {
 
 export default App;
 ```  
+**Accessing the theme in a component (useTheme Hook)**  
+[material-ui.com/styles/advanced/#accessing-the-theme-in-a-component](https://material-ui.com/styles/advanced/#accessing-the-theme-in-a-component)
+```javascript
+import { useTheme } from '@material-ui/core/styles';
+
+function DeepChild() {
+  const theme = useTheme();
+  return <span>{`spacing ${theme.spacing}`}</span>;
+}
+```  
 
 ----
 
@@ -175,14 +185,12 @@ All properties offered in the theme object: [material-ui.com/customization/defau
 ```javascript
 import { makeStyles } from '@material-ui/core'
 
-const useStyles = makeStyles((theme) => {
-  return {
-    title: {
-      textDecoration: 'underline',
-      marginBottom: theme.spacing(3)
-    }
+const useStyles = makeStyles((theme) => ({
+  title: {
+    textDecoration: 'underline',
+    marginBottom: theme.spacing(3)
   }
-})
+}))
 
 export default function MyComponent() {
   const classes = useStyles()
@@ -257,8 +265,20 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import { makeStyles } from '@material-ui/core'
 
-export default function Layout({ children }) {
+const useStyles = makeStyles({
+  active: {
+    color: 'red'
+  },
+  listItemTextPrimary: {
+    fontWeight: 'bold',
+  }
+})
+
+export default function SimpleList() {
+
+  const classes = useStyles()
 
   const menuItems = [
     { 
@@ -284,7 +304,10 @@ export default function Layout({ children }) {
             className={location.pathname == item.path ? classes.active : null}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
+            <ListItemText
+              classes={{primary: classes.listItemTextPrimary}}
+              primary={item.text} 
+            />
           </ListItem>
         ))}
       </List>
