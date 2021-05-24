@@ -237,6 +237,33 @@ function IncrementCompo() {
 export default IncrementCompo
 ```
 
+## React Memo
+[reactjs.org/docs/react-api.html#reactmemo](https://reactjs.org/docs/react-api.html#reactmemo)  
+[robinwieruch.de/react-memo](https://www.robinwieruch.de/react-memo)  
+[dmitripavlutin.com/use-react-memo-wisely/](https://dmitripavlutin.com/use-react-memo-wisely/)  
+If your component renders the same result given the same props, you can wrap it in a call to React.memo for a performance boost in some cases by memoizing the result. This means that React will skip rendering the component, and reuse the last rendered result.  
+React's memo function shines when your React components become slow and you want to improve their performance. Often this happens in data heavy components, like huge lists where lots of components have to rerender once a single data point changes.  
+
+**Note:**  
+1. If the component isn’t heavy and usually renders with different props, most likely you don’t need React.memo().
+2. Use the following rule of thumb: don’t use memoization if you can’t quantify the performance gains. 
+3. Performance-related changes applied incorrectly can even harm performance. Use React.memo() wisely.  
+
+```javascript
+import React from 'react'
+
+function MyMemoCompo(props) {
+
+  // Only called when props really has changed
+
+  return (
+    ...
+  )
+}
+
+export default React.memo(MyMemoCompo)
+``` 
+
 ----
 
 ## Binding 
