@@ -12,26 +12,9 @@ interface ITodoRowProps {
 function TodoRow( {item, onDeleteClick}: ITodoRowProps ) {
 }  
 
-<TodoRow key={item.id} ...TodoRowProps />  
+<TodoRow key={item.id} {...TodoRowProps} />  
 // Or optionaly  
 <TodoRow key={item.id} item={item} onDeleteClick={onDeleteClick} />
-```  
-
-----
-
-## Redux Hooks
-```javascript
-import { useDispatch, useSelector } from "react-redux";
-
-const isLoading: boolean = useSelector( (state: IRootState) => state.newsState.isLoading);
-const dispatch: Function = useDispatch()
-
-// Loads immediately after mounting or when inputText changes
-useEffect(() => {
-  if(inputText) dispatch(loadNews(inputText));
-
-// eslint-disable-next-line 
-}, [inputText]);
 ```  
 
 ----
@@ -93,13 +76,6 @@ return (
 
 ----
 
-## Hooks  
-See also:  
-[fettblog.eu/typescript-react/hooks/](https://fettblog.eu/typescript-react/hooks/)  
-[reactjs.org/docs/hooks-reference.html](https://reactjs.org/docs/hooks-reference.html)  
-
-----
-
 ## Axios  
 See also: [blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/](https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/)
 ```javascript
@@ -142,6 +118,126 @@ const MyComponent: FunctionComponent<ComponentProps> = (props) => {
   );
 }
 ```  
+
+----
+
+## Hooks   
+[reactjs.org/docs/hooks-reference.html](https://reactjs.org/docs/hooks-reference.html)  
+[fettblog.eu/typescript-react/hooks/](https://fettblog.eu/typescript-react/hooks/)  
+
+----
+
+## Redux Hooks
+```javascript
+import { useDispatch, useSelector } from "react-redux";
+
+const isLoading: boolean = useSelector( (state: IRootState) => state.newsState.isLoading);
+const dispatch: Function = useDispatch()
+
+// Loads immediately after mounting or when inputText changes
+useEffect(() => {
+  if(inputText) dispatch(loadNews(inputText));
+
+// eslint-disable-next-line 
+}, [inputText]);
+```  
+
+----
+
+## useContext / useReducer
+[reactjs.org/docs/hooks-reference.html#usecontext](https://reactjs.org/docs/hooks-reference.html#usecontext)  
+[reactjs.org/docs/hooks-faq.html#how-to-avoid-passing-callbacks-down](https://reactjs.org/docs/hooks-faq.html#how-to-avoid-passing-callbacks-down)  
+
+```javascript
+// Reducer
+export interface ICountState {
+  count: number
+}
+export interface IReducerAction {
+  type: string,
+  payload?: any
+}
+
+export const INCREMENT = 'INCREMENT'
+export const DECREMENT = 'DECREMENT'
+
+function reducer(state: ICountState, action: IReducerAction): ICountState {
+  switch (action.type) {
+    case INCREMENT:
+      return {count: state.count + 1};
+    case DECREMENT:
+      return {count: state.count - 1};
+    default:
+      throw new Error();
+  }
+}
+
+export default reducer
+```
+
+```javascript
+// Main App
+import {createContext, useReducer} from 'react'
+import reducer, {ICountState, IReducerAction} from './reducer/CountReducer'
+import ShowStateCompo from './ShowStateCompo'
+import IncrementCompo from './IncrementCompo'
+
+const initialState: ICountState = {count: 0};
+
+export const DispatchContext = createContext((a:IReducerAction) => {});
+// export const StateContext = createContext(initialState);
+
+function ContextReducerApp() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <DispatchContext.Provider value={dispatch}>
+      <ShowStateCompo {...state} />
+      <IncrementCompo />
+    </DispatchContext.Provider>
+  )
+}
+
+export default ContextReducerApp
+```  
+
+```javascript
+// State Component
+import {ICountState} from './reducer/CountReducer'
+
+function ShowStateCompo(state: ICountState) {
+  return (
+    <div>
+      Count is: {state.count}
+    </div>
+  )
+}
+
+export default ShowStateCompo
+``` 
+
+```javascript
+// Dispatch Component
+import {useContext} from 'react'
+import {DispatchContext} from './ContextReducerApp'
+import {INCREMENT} from './reducer/CountReducer'
+
+function IncrementCompo() {
+  const dispatch = useContext(DispatchContext);
+
+  return (
+    <button onClick={() => dispatch({type: INCREMENT})}>
+      Incremnt
+    </button>
+  )
+}
+
+export default IncrementCompo
+```
+
+```javascript
+
+```
 
 ----
 
