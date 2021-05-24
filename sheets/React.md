@@ -200,6 +200,8 @@ function ContextReducerApp() {
 
 export default ContextReducerApp
 ```  
+Note that you can still choose whether to pass the application state down as props (more explicit) or as context (more convenient for very deep updates). If you use context to pass down the state too, use two different context types — the dispatch context never changes, so components that read it don’t need to rerender unless they also need the application state.  
+&nbsp;  
 
 ```javascript
 // State Component
@@ -233,10 +235,6 @@ function IncrementCompo() {
 }
 
 export default IncrementCompo
-```
-
-```javascript
-
 ```
 
 ----
