@@ -22,7 +22,10 @@ ReactDOM.render(
   </ApolloProvider>,
   document.getElementById('root')
 );
-```
+```  
+See also class **ApolloClient** for **properties** and **functions**:  
+[apollographql.com/docs/react/api/core/ApolloClient/](https://www.apollographql.com/docs/react/api/core/ApolloClient/)  
+&nbsp;
 
 **Customizing request headers**  
 [apollographql.com/docs/react/networking/basic-http-networking/](https://www.apollographql.com/docs/react/networking/basic-http-networking/)  
@@ -228,4 +231,48 @@ export function RocketInventoryList() {
     </ul>
   );
 }
-```
+```  
+
+### **Next.js with Apollo**  
+**Server-side Rendering (SSR) and Static Site Generation using ApolloClient**  
+[apollographql.com/blog/apollo-client/next-js/next-js-getting-started/](https://www.apollographql.com/blog/apollo-client/next-js/next-js-getting-started/)  
+See also class **ApolloClient** for **properties** and **functions**:  
+[apollographql.com/docs/react/api/core/ApolloClient/](https://www.apollographql.com/docs/react/api/core/ApolloClient/)  
+
+```javascript
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+
+const client = new ApolloClient({
+  uri: 'https://countries.trevorblades.com',
+  cache: new InMemoryCache()
+});
+
+// getStaticProps() works same as getServerSideProps()
+export async function getServerSideProps() {
+  const { error, data } = await client.query({
+    query: gql`
+      query Countries {
+        countries {
+          code
+          name
+          emoji
+        }
+      }
+    `,
+  });
+
+  // Optional boolean value to allow the page to return a 404 status and page. 
+  if (!data || error) {
+    return {
+      notFound: true
+    }
+  }
+
+  // Pass data to the page via props
+  return { 
+    props: { 
+      countries: data.countries 
+    }
+  }
+}
+``` 
