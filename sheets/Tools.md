@@ -2,6 +2,11 @@
 [Download Node.js/NPM](https://nodejs.org/en/)  
 [install-node-js-npm-windows](https://blog.teamtreehouse.com/install-node-js-npm-windows)  
 [install Yarn](https://classic.yarnpkg.com/en/docs/install/)  
+&nbsp;  
+**Or using NVM**  
+[NVM for Windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows)  
+[Download NVM Windows Installer](https://github.com/coreybutler/nvm-windows/releases)  
+**Note:** nvm-windows runs in an Admin shell. When running *nvm install* or *nvm use* etc., you'll need to start powershell (or CMD) as Administrator to use nvm-windows.
 
 ----
 
@@ -38,7 +43,7 @@
     * Datei -> Neues Schlüsselpaar...  
     * OpenPGP Schlüsselpaar erstellen
     * Public Key exportieren für GitHub etc. (Doppelklick auf Zertifikat im Fenster, im neuen Fenster unten der 'Exportieren'Button)
-2. Im lokalen Git Repository unter .git/config die Key Id als 'signingkey' verwenden
+2. Im lokalen Git Repository in Datei .git/config die Key Id als 'signingkey' verwenden
 
 ```bash
 [user]
