@@ -53,3 +53,8 @@
 [gpg]
     program = "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
 ```
+
+----
+
+### **Festplatte partitionieren**  
+[windows-10-festplattenpartitionen-erstellen-und-bearbeiten](https://www.pctipp.ch/praxis/windows/windows-10-festplattenpartitionen-erstellen-und-bearbeiten-1990664.html)  
